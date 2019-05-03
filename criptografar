@@ -1,0 +1,57 @@
+int pos = 0;
+    int l1, l2, c1, c2;
+    int x;
+    
+    while (pos < strlen(msg)) {
+
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 6; j++) {
+                if (tab[i][j] == msg[pos]) { //acho a primeira letra
+                    l1 = i;
+                    c1 = j;
+                }
+            }
+        }
+
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 6; j++) {
+                if (tab[i][j] == msg[pos + 1]) { //acho a segunda letra
+                    l2 = i;
+                    c2 = j;
+                }
+            }
+        }
+
+        if (l1 == l2) {//mesma linha
+            if (c1 + 1 < 6) {
+                msg[pos] = tab[l1][c1 + 1];
+                msg[pos + 1] = tab[l1][c2 + 1];
+            } else {
+                msg[pos] = tab[l1][0];
+                msg[pos + 1] = tab[l1][0];
+            }
+        } else {
+            if (c1 == c2) {//mesma coluna
+                if (l1 + 1 < 6) {
+                    msg[pos] = tab[l1 + 1][c1];
+                    msg[pos + 1] = tab[l2 + 1][c1];
+                } else {
+                    msg[pos] = tab[0][c1];
+                    msg[pos + 1] = tab[0][c1];
+                }
+            } else { //linhas e colunas diferentes
+                msg[pos] = tab[l1][c2];
+                msg[pos + 1] = tab[l2][c1];
+            }
+        }
+        pos + 2;
+
+    }
+
+    for (int i = 0; i < strlen(msg); i++) {
+        if (i % 2 == 0) {
+            printf(" ");
+        } else {
+            printf("%c", msg[i]);
+        }
+    }
