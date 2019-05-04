@@ -1,0 +1,245 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+#include <locale.h>
+#include <stdbool.h>
+char** gerarTabela(char carac[]) {
+    int tam = 6;
+    for (int i = 0; i < tam; i++) { //embaralhar o vetor
+        int r = rand() % tam;
+        char aux = carac[i];
+        carac[i] = carac[r];
+        carac[r] = aux;
+    }
+    int k = 0;
+    double tam2 = 6; 
+    
+    //Malloc = aloca espaços para blocos de bytes consecutivos na memoria
+    //Sizeof = retorna a quantidade de bytes um objeto possui
+    char **m = (char**) malloc(tam2 * sizeof (char*));//Como se estivesse fazendo um char m[tam2]
+    for (int i = 0; i < tam2; i++) { //Percorre as linhas do Vetor de Ponteiros
+        m[i] = (char*) malloc(tam2 * sizeof (char)); //Aloca um Vetor de Inteiros para cada posição do Vetor de Ponteiros.
+        for (int j = 0; j < tam2; j++) { //Percorre o Vetor de Inteiros atual.
+            m[i][j] = carac[k];
+            k++;
+        }
+    }
+
+    return m;
+}
+
+void imprimirTabela(char **matriz) {
+    double tam = 6; 
+    for (int i = 0; i < tam; i++) {
+        for (int j = 0; j < tam; j++) {
+            printf("%c ", matriz[i][j]);
+        }
+        putchar('\n');
+    }
+}
+
+char* xInsertion (char msg[]){
+    int pos = 0;
+    int tam = strlen(msg);
+    char *aux = (char*) malloc(tam * sizeof (char));
+    //retira os espaços em branco pra poder ficar mais facil a inserção
+    for(int j = 0; j < tam;j++){
+        if(msg[j] == ' '){
+           for(int n = j; n < tam; n++){
+               msg[n] = msg[n+1];
+           }
+        }
+    }
+    //vai armazenando em um segundo vetor
+    //achei mais facil fazer assim
+    for(int i = 0; i < tam;){
+        if(msg[i] == msg[i+1]){
+            aux[pos] = msg[i];
+            aux[pos+1] = 'X';
+            i++;
+        }else{
+            aux[pos] = msg[i];
+            aux[pos+1] = msg[i+1];
+            i += 2;
+        }
+        pos = pos + 2;
+    }
+    int aux_size = strlen(aux); 
+    //verifica se a string é impar 
+    //se sim, adiciona um x na ultima posição
+    if((tam-1)  % 2 != 0){
+        aux[aux_size-1] = 'x';
+    }
+    return aux;
+ }
+
+char* criptografar(char *msg){
+    int pos = 0;
+    int l1, l2, c1, c2;
+    while(pos < strlen(msg)){
+        for(int i = 0; i < 6; i++){
+            for(int j = 0; j < 6; j++){
+                if(tab[i][j] == msg[pos]){ //Econtra a primeira letra
+                    l1 = i;
+                    c1 = j;
+                }else if(tab[i][j] == msg[pos+1]){
+                    l2 = i;
+                    c2 = j;
+                }
+            }
+        }
+        if(l1 == l2){//Mesma linha
+            if(c1 + 1 < 6){
+                msg[pos] = tab[l1][c1 + 1];
+            }else{
+                msg[pos] = tab[l1][0];
+            }
+            if(c2 + 1 < 6){
+                msg[pos+1] = tab[l2][c2 + 1];
+            }else{
+                msg[pos+1] = tab[l2][0];
+            }
+        }else if(c1 == c2){//Mesma coluna
+                if(l1 + 1 < 6){
+                    msg[pos] = tab[l1 + 1][c1];
+                }else{
+                    msg[pos] = tab[0][c1];
+                }
+                if(l2 + 1 < 6){
+                    msg[pos+ 1] = tab[l2 + 1][c1];
+                }else{
+                    msg[pos+1] = tab[0][c1];
+                }
+        }else{ //Linhas e Colunas Diferentes
+                msg[pos] = tab[l1][c2];
+                msg[pos + 1] = tab[l2][c1];
+        }
+        pos += 2;
+    }
+    return msg;
+}
+
+char* descrip(char *msg){
+    int pos = 0;
+    int l1, l2, c1, c2;
+    while(pos < strlen(msg)){
+        for(int i = 0; i < 6; i++){
+            for(int j = 0; j < 6; j++){
+                if(tab[i][j] == msg[pos]){ //Econtra a primeira letra
+                    l1 = i;
+                    c1 = j;
+                }else if(tab[i][j] == msg[pos+1]){ //Encontra a segunda letra
+                    l2 = i;
+                    c2 = j;
+                }
+            }
+        }
+        if(l1 == l2){//Mesma linha
+            if(c1-1 < 0){
+                msg[pos] = tab[l1][5];
+            }else{
+                msg[pos] = tab[l1][c1 - 1];
+            }
+            if(c2-1 < 0){
+                msg[pos+1] = tab[l2][5];
+            }else{
+                msg[pos+1] = tab[l2][c2-1];
+            }
+        }else if(c1 == c2){//Mesma coluna
+                if(l1-1 < 0){
+                    msg[pos] = tab[5][c1];
+                }else{
+                    msg[pos] = tab[l1-1][c1];
+                }
+                if(l2-1 < 0){
+                    msg[pos+ 1] = tab[5][c1];
+                }else{
+                    msg[pos+1] = tab[l2-1][c1];
+                }
+        }else{ //Linhas e Colunas Diferentes
+                msg[pos] = tab[l1][c2];
+                msg[pos + 1] = tab[l2][c1];
+        }
+        pos += 2;
+    }
+    return msg;
+
+}
+
+int main(int argc, char** argv) {
+    //setlocale(LC_ALL, "");
+    int acao;
+    char msgm[100];
+    char *p_ch;
+    char carac[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q',
+        'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
+    char **p;
+    bool verify = false;
+    do {
+        printf("Digite a ação que deseja fazer:\n");
+        printf("1. Gerar tabela;\n");
+        printf("2. Introduzir mensagem;\n");
+        printf("3. Ver mensagem criptografada;\n");
+        printf("4. Decriptografar mensagem;\n");
+        printf("5. Editar tabela;\n");
+        printf("6. Imprimir tabela;\n");
+        printf("7. SAIR.\n");
+        printf("_________________________\n");
+        scanf("%d", &acao); 
+        int ch;
+        while ((ch = getchar()) != '\n' && ch != EOF);
+        switch (acao) {
+            case 1:
+               if(verify == false){
+                    p = gerarTabela(carac);
+                    verify = true;
+                }
+                break;
+            case 2:
+                    printf("Digite a mensagem:");
+                    fgets(msgm, 100, stdin);
+                    break;
+            case 3:
+                p_ch = xInsertion(msgm);
+                p_ch = criptografar(p_ch);
+                printf("%s",p_ch);
+                break;
+            case 4:
+                p_ch = descrip(p_ch);
+                printf("%s",p_ch);
+                break;
+            case 5:
+                printf("Digite a ação que deseja fazer:\n");
+                printf("1. Adicionar letras minusculas;\n");
+                printf("2. Remover números;\n");
+                printf("3. Adicionar caracteres especiais;\n");
+                int acao2;
+                scanf("%d", &acao2);
+                if(acao2 == 1){
+                    char carac2[] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q',
+                        'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
+                    strcat(carac, carac2);
+                    p = gerarTabela(carac);
+                }
+                if(acao2 == 2){
+                    char carac2[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q',
+                        'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
+                    p = gerarTabela(carac2);
+                }
+                if(acao2 == 3){
+                    char carac2[] = {'Ç', 'Á', 'À', 'É', 'Í', 'Ó', 'Ú'};
+                    strcat(carac, carac2);
+                    p = gerarTabela(carac);
+                }
+                break;
+            case 6:
+                imprimirTabela(p);
+                break;
+        }
+    } while (acao != 7 );
+
+    return (EXIT_SUCCESS);
+}
+
+
