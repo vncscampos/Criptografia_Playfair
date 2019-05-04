@@ -174,9 +174,9 @@ int main(int argc, char** argv) {
     char carac[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q',
         'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
     char **p;
-    bool verify = false;
-    bool verify_crip = false;
-    bool verify_msg = false;
+    bool verify = false;//Verifica a tabela 
+    bool verify_crip = false;//Verifica a criptografia - Olhar o case 2
+    bool verify_decrip = false;//Verifica a decriptografia - Olhar o case 3
     do {
         printf("Digite a ação que deseja fazer:\n");
         printf("1. Gerar tabela;\n");
@@ -206,7 +206,7 @@ int main(int argc, char** argv) {
                 if(verify_crip == true){
                     p_ch = xInsertion(msgm);
                     p_ch = criptografar(p_ch,p);
-                    verify_msg = true;
+                    verify_decrip = true;
                 }
                 verify_crip = false;
                 printf("%s\n",p_ch);
@@ -216,7 +216,7 @@ int main(int argc, char** argv) {
                     p_ch = decrip(p_ch,p);
                 }
                 printf("%s\n",p_ch);
-                verify_msg = false;
+                verify_decrip = false;
                 break;
             case 5:
                 printf("Digite a ação que deseja fazer:\n");
