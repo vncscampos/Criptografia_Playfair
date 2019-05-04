@@ -68,8 +68,7 @@ char* xInsertion (char msg[]){
     int aux_size = strlen(aux); 
     //verifica se a string é impar 
     //se sim, adiciona um x na ultima posição
-    printf("%d\n",tam);
-    if((tam-2)  % 2 != 0){
+    if((tam-2) % 2 != 0){
         aux[aux_size-1] = 'X';
     }
     return aux;
@@ -78,7 +77,7 @@ char* xInsertion (char msg[]){
 char* criptografar(char *msg,char **tab){
     int pos = 0;
     int l1, l2, c1, c2;
-    while(pos < strlen(msg)){
+    while(pos < strlen(msg)-2){
         for(int i = 0; i < 6; i++){
             for(int j = 0; j < 6; j++){
                 if(tab[i][j] == msg[pos]){ //Econtra a primeira letra
@@ -121,10 +120,10 @@ char* criptografar(char *msg,char **tab){
     return msg;
 }
 
-char* descrip(char *msg,char **tab){
+char* decrip(char *msg,char **tab){
     int pos = 0;
     int l1, l2, c1, c2;
-    while(pos < strlen(msg)){
+    while(pos < strlen(msg)-2){
         for(int i = 0; i < 6; i++){
             for(int j = 0; j < 6; j++){
                 if(tab[i][j] == msg[pos]){ //Econtra a primeira letra
@@ -169,7 +168,6 @@ char* descrip(char *msg,char **tab){
 }
 
 int main(int argc, char** argv) {
-    //setlocale(LC_ALL, "");
     int acao;
     char msgm[100];
     char *p_ch;
@@ -177,6 +175,8 @@ int main(int argc, char** argv) {
         'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
     char **p;
     bool verify = false;
+    bool verify_crip = false;
+    bool verify_msg = false;
     do {
         printf("Digite a ação que deseja fazer:\n");
         printf("1. Gerar tabela;\n");
@@ -200,16 +200,23 @@ int main(int argc, char** argv) {
             case 2:
                     printf("Digite a mensagem:");
                     fgets(msgm, 100, stdin);
+                    verify_crip = true;
                     break;
             case 3:
-                p_ch = xInsertion(msgm);
-                printf("%s\n",p_ch);
-                p_ch = criptografar(p_ch,p);
+                if(verify_crip == true){
+                    p_ch = xInsertion(msgm);
+                    p_ch = criptografar(p_ch,p);
+                    verify_msg = true;
+                }
+                verify_crip = false;
                 printf("%s\n",p_ch);
                 break;
             case 4:
-                p_ch = descrip(p_ch,p);
+                if(verify_msg == true){
+                    p_ch = decrip(p_ch,p);
+                }
                 printf("%s\n",p_ch);
+                verify_msg = false;
                 break;
             case 5:
                 printf("Digite a ação que deseja fazer:\n");
@@ -223,8 +230,7 @@ int main(int argc, char** argv) {
                     strcat(carac, carac2);
                     p = gerarTabela(carac);
                 }
-                if(acao2 == 2){
-                    char carac2[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q',
+                if(acao2 == 2){ char carac2[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q',
                         'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
                     p = gerarTabela(carac2);
                 }
