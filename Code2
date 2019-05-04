@@ -68,13 +68,14 @@ char* xInsertion (char msg[]){
     int aux_size = strlen(aux); 
     //verifica se a string é impar 
     //se sim, adiciona um x na ultima posição
-    if((tam-1)  % 2 != 0){
-        aux[aux_size-1] = 'x';
+    printf("%d\n",tam);
+    if((tam-2)  % 2 != 0){
+        aux[aux_size-1] = 'X';
     }
     return aux;
  }
 
-char* criptografar(char *msg){
+char* criptografar(char *msg,char **tab){
     int pos = 0;
     int l1, l2, c1, c2;
     while(pos < strlen(msg)){
@@ -120,7 +121,7 @@ char* criptografar(char *msg){
     return msg;
 }
 
-char* descrip(char *msg){
+char* descrip(char *msg,char **tab){
     int pos = 0;
     int l1, l2, c1, c2;
     while(pos < strlen(msg)){
@@ -202,18 +203,18 @@ int main(int argc, char** argv) {
                     break;
             case 3:
                 p_ch = xInsertion(msgm);
-                p_ch = criptografar(p_ch);
-                printf("%s",p_ch);
+                printf("%s\n",p_ch);
+                p_ch = criptografar(p_ch,p);
+                printf("%s\n",p_ch);
                 break;
             case 4:
-                p_ch = descrip(p_ch);
-                printf("%s",p_ch);
+                p_ch = descrip(p_ch,p);
+                printf("%s\n",p_ch);
                 break;
             case 5:
                 printf("Digite a ação que deseja fazer:\n");
                 printf("1. Adicionar letras minusculas;\n");
                 printf("2. Remover números;\n");
-                printf("3. Adicionar caracteres especiais;\n");
                 int acao2;
                 scanf("%d", &acao2);
                 if(acao2 == 1){
@@ -226,11 +227,6 @@ int main(int argc, char** argv) {
                     char carac2[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q',
                         'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
                     p = gerarTabela(carac2);
-                }
-                if(acao2 == 3){
-                    char carac2[] = {'Ç', 'Á', 'À', 'É', 'Í', 'Ó', 'Ú'};
-                    strcat(carac, carac2);
-                    p = gerarTabela(carac);
                 }
                 break;
             case 6:
