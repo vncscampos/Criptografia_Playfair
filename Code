@@ -60,6 +60,8 @@ int main(int argc, char** argv) {
         printf("7. SAIR.\n");
         printf("_________________________\n");
         scanf("%d", &acao);
+        int ch;
+        while ((ch = getchar()) != '\n' && ch != EOF);  <<<<<<-------------------------------------------gay
 
         switch (acao) {
             case 1:
