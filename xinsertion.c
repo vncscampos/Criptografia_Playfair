@@ -41,5 +41,16 @@ void main(){
     if((tam-1)  % 2 != 0){
         aux[aux_size-1] = 'X';
     }
+    
+    char *aux2 = (char*) malloc(tam * sizeof (char)); // <<<<------- era pra ter espaç fdp
+    int k=0;
+    for (int i = 0; i < 100; i++) {
+        if (i % 3 == 0) {
+            aux2[i] = ' ';
+        } else {
+            aux2[i] = aux[k];
+            k++;
+        }
+    }
 
 }
