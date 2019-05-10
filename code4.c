@@ -15,7 +15,7 @@ char** gerarTabela(char carac[], int *size) {
     }
 
     int k = 0;
-    int tam2 = sqrt(strlen(carac));
+    int tam2 = 6;
 
     char **m = (char**) malloc(tam2 * sizeof (char*)); //Como se estivesse fazendo um char m[tam2]
     for (int i = 0; i < tam2; i++) { //Percorre as linhas do Vetor de Ponteiros
@@ -46,14 +46,14 @@ char* xInsertion(char msg[], int space[]) {
     char *aux = (char*) malloc(tam * sizeof (char));
 
     int k = 0;
-    for (int i = 0; i < tam; i++) {
+    for (int i = 0; i < tam; i++) { //salva os espaços da mensagem
         if (msg[i] == ' ') {
             space[k] = i;
             k++;
         }
     }
 
-    for (int j = 0; j < tam; j++) {
+    for (int j = 0; j < tam; j++) { //remove os espaços da mensagem
         if (msg[j] == ' ') {
             for (int n = j; n < tam; n++) {
                 msg[n] = msg[n + 1];
@@ -61,7 +61,7 @@ char* xInsertion(char msg[], int space[]) {
         }
     }
 
-    for (int i = 0; i < tam;) {
+    for (int i = 0; i < tam;) { //insere o X
         if (msg[i] == msg[i + 1]) {
             aux[pos] = msg[i];
             aux[pos + 1] = 'X';
@@ -73,10 +73,10 @@ char* xInsertion(char msg[], int space[]) {
         }
         pos = pos + 2;
     }
-    int aux_size = strlen(aux);
+    int aux_size = strlen(aux) - 1;
     //verifica se a string é impar 
     //se sim, adiciona um x na ultima posição
-    if ((tam - 2) % 2 != 0) {
+    if (aux_size % 2 != 0) {
         aux[aux_size - 1] = 'X';
     }
 
@@ -92,7 +92,7 @@ char* criptografar(char *msg, char **tab, int tam) {
                 if (tab[i][j] == msg[pos]) { //Encontra a primeira letra
                     l1 = i;
                     c1 = j;
-                } else if (tab[i][j] == msg[pos + 1]) {
+                } else if (tab[i][j] == msg[pos + 1]) { //encontra a segunda letra
                     l2 = i;
                     c2 = j;
                 }
@@ -229,7 +229,7 @@ int main(int argc, char** argv) {
                 }
                 verify_crip = false;
 
-                for (int i = 0; i < strlen(p_ch); i++) {
+                for (int i = 0; i < strlen(p_ch); i++) { //separa as letras de 4 em 4
                     if (i % 5 == 0) {
                         printf(" ");
                     } else {
@@ -249,13 +249,13 @@ int main(int argc, char** argv) {
                             p_ch[i] = ' ';
                         }
                     }
-                    
+
                 }
-                
+
                 for (int i = 0; i < sizeof (space); i++) { //retira os espaços
                     int aux = space[i];
                     if (aux != 0) {
-                        for (int j = 100 - 1; j > aux; j--) {
+                        for (int j = 99; j > aux; j--) {
                             p_ch[j] = p_ch[j - 1];
                         }
                         p_ch[aux] = ' ';
