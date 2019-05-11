@@ -278,7 +278,8 @@ int main(int argc, char** argv) {
                 
                 int aux_size = strlen(p_ch) - 1; //retira o X da ultima posiçao caso a palavra seja ímpar
                 if (aux_size % 2 != 0) {
-                    p_ch[aux_size] = p_ch[aux_size+1];
+                    //p_ch[aux_size] = p_ch[aux_size+1];
+                    p_ch[aux_size] = '\0';
                 }
 
                 for (int i = 0; i < sizeof (space); i++) { //coloca os espaços
