@@ -269,7 +269,9 @@ int main(int argc, char** argv) {
                 for (int i = 0; i < strlen(p_ch); i++) { // retira o X
                     if (p_ch[i] == 'X') {
                         if (p_ch[i - 1] == p_ch[i + 1]) {
-                            p_ch[i] = ' ';
+                            for (int k = i; k < strlen(p_ch); k++) { //shift
+                                p_ch[k] = p_ch[k + 1];
+                            }
                         }
                     }
                 }
