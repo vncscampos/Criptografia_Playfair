@@ -148,23 +148,23 @@ char* decrip(char *msg, char **tab, int tam) {
         }
         if (l1 == l2) {//Mesma linha
             if (c1 - 1 < 0) {
-                msg[pos] = tab[l1][5];
+                msg[pos] = tab[l1][tam -1 ];
             } else {
                 msg[pos] = tab[l1][c1 - 1];
             }
             if (c2 - 1 < 0) {
-                msg[pos + 1] = tab[l2][5];
+                msg[pos + 1] = tab[l2][tam - 1];
             } else {
                 msg[pos + 1] = tab[l2][c2 - 1];
             }
         } else if (c1 == c2) {//Mesma coluna
             if (l1 - 1 < 0) {
-                msg[pos] = tab[5][c1];
+                msg[pos] = tab[tam -1 ][c1];
             } else {
                 msg[pos] = tab[l1 - 1][c1];
             }
             if (l2 - 1 < 0) {
-                msg[pos + 1] = tab[5][c1];
+                msg[pos + 1] = tab[tam - 1][c1];
             } else {
                 msg[pos + 1] = tab[l2 - 1][c1];
             }
@@ -297,6 +297,7 @@ int main(int argc, char** argv) {
                 break;
 
             case 5:
+                carac2[25] = '\0';
                 p = gerarTabela(carac2, &tam);
                 break;
 
